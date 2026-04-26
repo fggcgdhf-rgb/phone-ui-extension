@@ -1,0 +1,822 @@
+/* ============================================
+   SillyTavern Phone Extension - phone.css
+   ============================================ */
+
+:root {
+    --phone-primary: #f8f9ff;
+    --phone-secondary: #e8ecff;
+    --phone-accent: #6c63ff;
+    --phone-accent2: #ff6b9d;
+    --phone-accent3: #43e97b;
+    --phone-text: #2d2d44;
+    --phone-text-light: #7b7b9d;
+    --phone-glass: rgba(255, 255, 255, 0.7);
+    --phone-glass-dark: rgba(108, 99, 255, 0.12);
+    --phone-shadow: 0 8px 32px rgba(108,99,255,0.18);
+    --phone-radius: 22px;
+    --phone-radius-sm: 12px;
+    --phone-fab-size: 60px;
+    --ig-gradient: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    --tiktok-color: #010101;
+    --line-color: #06c755;
+    --twitter-color: #1da1f2;
+    --font-main: 'Prompt', 'Kanit', 'Segoe UI', sans-serif;
+    --transition: all 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+    --wallpaper: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+}
+
+/* ---- FAB Button ---- */
+#phone-fab {
+    position: fixed;
+    bottom: 80px;
+    right: 22px;
+    width: var(--phone-fab-size);
+    height: var(--phone-fab-size);
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--phone-accent), var(--phone-accent2));
+    box-shadow: 0 4px 24px rgba(108,99,255,0.45), 0 1px 4px rgba(0,0,0,0.12);
+    cursor: pointer;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition);
+    border: none;
+    outline: none;
+    animation: fabPulse 2.8s ease-in-out infinite;
+    user-select: none;
+}
+#phone-fab:hover {
+    transform: scale(1.1) rotate(-8deg);
+    box-shadow: 0 8px 36px rgba(108,99,255,0.55);
+}
+#phone-fab svg {
+    width: 28px; height: 28px; fill: white;
+}
+@keyframes fabPulse {
+    0%,100% { box-shadow: 0 4px 24px rgba(108,99,255,0.45); }
+    50% { box-shadow: 0 4px 36px rgba(255,107,157,0.55), 0 0 0 8px rgba(108,99,255,0.08); }
+}
+
+/* ---- Phone Overlay ---- */
+#phone-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(30, 28, 50, 0.55);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+#phone-overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ---- Phone Frame ---- */
+#phone-frame {
+    width: 380px;
+    max-width: 98vw;
+    height: 720px;
+    max-height: 95vh;
+    background: var(--phone-primary);
+    border-radius: 42px;
+    box-shadow: 0 32px 80px rgba(30,28,50,0.35), 0 2px 8px rgba(108,99,255,0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    transform: scale(0.85) translateY(40px);
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s;
+    opacity: 0;
+    border: 2.5px solid rgba(108,99,255,0.15);
+}
+#phone-overlay.active #phone-frame {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+}
+
+/* ---- Phone Status Bar ---- */
+#phone-statusbar {
+    height: 32px;
+    background: var(--wallpaper);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    font-size: 11px;
+    color: white;
+    font-family: var(--font-main);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+.statusbar-time { font-size: 13px; font-weight: 700; }
+.statusbar-icons { display: flex; gap: 6px; align-items: center; }
+.statusbar-icons span { font-size: 10px; }
+
+/* ---- Phone Screen ---- */
+#phone-screen {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ---- Home Screen / Wallpaper ---- */
+#phone-home {
+    flex: 1;
+    background: var(--wallpaper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 18px;
+}
+.home-date-widget {
+    position: absolute;
+    top: 24px;
+    left: 0; right: 0;
+    text-align: center;
+    color: white;
+    font-family: var(--font-main);
+    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.home-date-widget .hw-time { font-size: 52px; font-weight: 700; line-height: 1; }
+.home-date-widget .hw-date { font-size: 14px; font-weight: 400; margin-top: 4px; opacity: 0.9; }
+.home-date-widget .hw-weather {
+    font-size: 13px; opacity: 0.85; margin-top: 6px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+
+/* ---- App Dock ---- */
+#phone-dock {
+    display: flex;
+    gap: 12px;
+    background: var(--phone-glass);
+    backdrop-filter: blur(16px);
+    border-radius: 28px;
+    padding: 12px 20px;
+    box-shadow: 0 4px 24px rgba(108,99,255,0.12);
+    border: 1px solid rgba(255,255,255,0.5);
+}
+.dock-tab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    padding: 8px 10px;
+    border-radius: 18px;
+    transition: var(--transition);
+    border: none;
+    background: none;
+    min-width: 56px;
+}
+.dock-tab:hover, .dock-tab.active {
+    background: var(--phone-glass-dark);
+    transform: translateY(-3px);
+}
+.dock-tab .tab-icon {
+    width: 38px; height: 38px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+.dock-tab .tab-label {
+    font-size: 10px;
+    font-family: var(--font-main);
+    font-weight: 600;
+    color: var(--phone-text);
+}
+
+/* Tab icon colors */
+.tab-phone .tab-icon { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+.tab-notes .tab-icon { background: linear-gradient(135deg, #f9d423, #f83600); }
+.tab-music .tab-icon { background: linear-gradient(135deg, #f857a6, #ff5858); }
+.tab-weather .tab-icon { background: linear-gradient(135deg, #56ccf2, #2f80ed); }
+.tab-game .tab-icon { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+
+/* ---- App Panel (slides in) ---- */
+.app-panel {
+    position: absolute;
+    inset: 0;
+    background: var(--phone-primary);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.38s cubic-bezier(0.4,0,0.2,1);
+    z-index: 10;
+    border-radius: 0;
+}
+.app-panel.open { transform: translateX(0); }
+
+/* App Header */
+.app-header {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    border-bottom: 1px solid var(--phone-secondary);
+    flex-shrink: 0;
+    font-family: var(--font-main);
+}
+.app-header .back-btn {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: var(--phone-secondary);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+.app-header .back-btn:hover { background: var(--phone-accent); color: white; }
+.app-header .app-title {
+    font-weight: 700;
+    font-size: 17px;
+    color: var(--phone-text);
+    flex: 1;
+}
+.app-header .app-title-logo { height: 24px; }
+
+/* ---- Phone Apps Grid ---- */
+#panel-phone .apps-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1;
+}
+.app-card {
+    border-radius: var(--phone-radius);
+    padding: 22px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+    border: 1.5px solid transparent;
+    background: white;
+    font-family: var(--font-main);
+}
+.app-card:hover {
+    transform: translateY(-4px) scale(1.03);
+    box-shadow: var(--phone-shadow);
+    border-color: var(--phone-accent);
+}
+.app-card .app-card-icon { font-size: 36px; }
+.app-card .app-card-name { font-weight: 600; font-size: 14px; color: var(--phone-text); }
+.app-card .app-card-sub { font-size: 11px; color: var(--phone-text-light); }
+
+/* --- IG App --- */
+#panel-ig .ig-header {
+    background: var(--ig-gradient);
+}
+#panel-ig .ig-header .app-title { color: white; }
+#panel-ig .ig-header .back-btn { background: rgba(255,255,255,0.3); color: white; }
+
+.ig-stories-row {
+    display: flex;
+    gap: 12px;
+    padding: 14px 16px;
+    overflow-x: auto;
+    flex-shrink: 0;
+    border-bottom: 1px solid var(--phone-secondary);
+}
+.ig-story-bubble {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    cursor: pointer; flex-shrink: 0;
+}
+.ig-story-ring {
+    width: 58px; height: 58px;
+    border-radius: 50%;
+    background: var(--ig-gradient);
+    padding: 2.5px;
+    display: flex; align-items: center; justify-content: center;
+}
+.ig-story-ring.seen { background: #ccc; }
+.ig-story-avatar {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: var(--phone-secondary);
+    border: 2.5px solid white;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    overflow: hidden;
+}
+.ig-story-name { font-size: 10px; font-family: var(--font-main); color: var(--phone-text); max-width: 58px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.ig-posts-feed { flex: 1; overflow-y: auto; }
+.ig-post {
+    border-bottom: 1px solid var(--phone-secondary);
+    padding-bottom: 8px;
+    margin-bottom: 4px;
+}
+.ig-post-header {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 14px;
+}
+.ig-post-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--phone-secondary); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.ig-post-user { font-weight: 700; font-size: 13px; font-family: var(--font-main); color: var(--phone-text); }
+.ig-post-time { font-size: 11px; color: var(--phone-text-light); }
+.ig-post-img {
+    width: 100%; aspect-ratio: 1/1;
+    background: linear-gradient(135deg, var(--phone-secondary), #d8b4fe);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 48px;
+}
+.ig-post-actions {
+    display: flex; gap: 14px; padding: 8px 14px;
+    align-items: center;
+}
+.ig-action-btn {
+    background: none; border: none; font-size: 20px; cursor: pointer;
+    transition: var(--transition); padding: 2px;
+}
+.ig-action-btn:hover { transform: scale(1.25); }
+.ig-post-caption { padding: 0 14px; font-size: 13px; font-family: var(--font-main); color: var(--phone-text); }
+.ig-post-likes { padding: 2px 14px; font-size: 12px; font-weight: 700; color: var(--phone-text); font-family: var(--font-main); }
+.ig-post-comments-link { padding: 0 14px; font-size: 12px; color: var(--phone-text-light); cursor: pointer; font-family: var(--font-main); }
+
+/* IG DM */
+.ig-dm-list { flex: 1; overflow-y: auto; }
+.dm-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: var(--transition);
+    border-bottom: 1px solid var(--phone-secondary);
+}
+.dm-item:hover { background: var(--phone-secondary); }
+.dm-avatar { width: 46px; height: 46px; border-radius: 50%; background: var(--ig-gradient); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+.dm-info { flex: 1; }
+.dm-name { font-weight: 700; font-size: 14px; font-family: var(--font-main); }
+.dm-preview { font-size: 12px; color: var(--phone-text-light); font-family: var(--font-main); margin-top: 2px; }
+.dm-time { font-size: 11px; color: var(--phone-text-light); font-family: var(--font-main); }
+
+/* Chat window */
+.chat-window { flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.chat-msg {
+    max-width: 75%;
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-family: var(--font-main);
+    font-size: 14px;
+    line-height: 1.5;
+    animation: msgPop 0.22s cubic-bezier(0.34,1.56,0.64,1);
+}
+@keyframes msgPop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.chat-msg.me {
+    align-self: flex-end;
+    background: linear-gradient(135deg, var(--phone-accent), var(--phone-accent2));
+    color: white;
+    border-bottom-right-radius: 4px;
+}
+.chat-msg.them {
+    align-self: flex-start;
+    background: white;
+    color: var(--phone-text);
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.chat-input-row {
+    display: flex; gap: 8px; padding: 10px 12px;
+    border-top: 1px solid var(--phone-secondary);
+    background: var(--phone-primary);
+    flex-shrink: 0;
+}
+.chat-input {
+    flex: 1; border: 1.5px solid var(--phone-secondary);
+    border-radius: 22px; padding: 10px 16px;
+    font-family: var(--font-main); font-size: 14px;
+    outline: none; background: white;
+    transition: var(--transition);
+}
+.chat-input:focus { border-color: var(--phone-accent); }
+.chat-send-btn {
+    width: 40px; height: 40px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--phone-accent), var(--phone-accent2));
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: white; font-size: 18px; transition: var(--transition);
+}
+.chat-send-btn:hover { transform: scale(1.12); }
+
+/* Story Viewer */
+.story-viewer {
+    position: absolute; inset: 0; background: black; z-index: 50;
+    display: flex; flex-direction: column;
+    transform: translateY(100%);
+    transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.story-viewer.open { transform: translateY(0); }
+.story-progress { display: flex; gap: 4px; padding: 10px 12px; }
+.story-progress-bar { flex: 1; height: 2.5px; background: rgba(255,255,255,0.35); border-radius: 2px; overflow: hidden; }
+.story-progress-fill { height: 100%; background: white; border-radius: 2px; width: 0%; transition: width 5s linear; }
+.story-top { display: flex; align-items: center; gap: 10px; padding: 4px 14px 10px; color: white; }
+.story-top .s-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--ig-gradient); display: flex; align-items: center; justify-content: center; font-size: 18px; }
+.story-top .s-name { font-weight: 700; font-size: 14px; font-family: var(--font-main); }
+.story-top .s-time { font-size: 11px; opacity: 0.7; font-family: var(--font-main); }
+.story-content { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 64px; }
+.story-close { position: absolute; top: 10px; right: 14px; background: none; border: none; color: white; font-size: 24px; cursor: pointer; z-index: 5; }
+
+/* --- LINE App --- */
+#panel-line .line-header { background: var(--line-color); }
+#panel-line .line-header .app-title { color: white; }
+#panel-line .line-header .back-btn { background: rgba(255,255,255,0.3); color: white; }
+
+.line-call-bar {
+    display: flex; gap: 10px; padding: 10px 14px;
+    border-bottom: 1px solid var(--phone-secondary);
+    flex-shrink: 0;
+}
+.line-call-btn {
+    flex: 1; padding: 10px;
+    border-radius: var(--phone-radius-sm);
+    border: none; cursor: pointer;
+    font-family: var(--font-main); font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    transition: var(--transition);
+}
+.line-call-btn.voice { background: linear-gradient(135deg, var(--line-color), #00a040); color: white; }
+.line-call-btn.video { background: linear-gradient(135deg, #2f80ed, #56ccf2); color: white; }
+.line-call-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,0.15); }
+
+/* Call screen overlay */
+.call-screen {
+    position: absolute; inset: 0; z-index: 100;
+    background: linear-gradient(180deg, #1a1a2e, #16213e);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 20px; color: white; font-family: var(--font-main);
+    transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.call-screen.open { transform: translateY(0); }
+.call-avatar { width: 90px; height: 90px; border-radius: 50%; background: linear-gradient(135deg, var(--phone-accent), var(--phone-accent2)); display: flex; align-items: center; justify-content: center; font-size: 42px; animation: callPulse 1.8s ease-in-out infinite; }
+@keyframes callPulse { 0%,100%{box-shadow:0 0 0 0 rgba(108,99,255,0.4)} 50%{box-shadow:0 0 0 18px rgba(108,99,255,0)} }
+.call-name { font-size: 26px; font-weight: 700; }
+.call-status { font-size: 14px; opacity: 0.7; }
+.call-timer { font-size: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.call-actions { display: flex; gap: 22px; margin-top: 30px; }
+.call-action-btn {
+    width: 58px; height: 58px; border-radius: 50%; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+    transition: var(--transition);
+}
+.call-action-btn:hover { transform: scale(1.1); }
+.call-action-btn.end { background: #e53e3e; color: white; }
+.call-action-btn.mute { background: rgba(255,255,255,0.15); color: white; }
+.call-action-btn.speaker { background: rgba(255,255,255,0.15); color: white; }
+
+/* Location share */
+.share-location-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: 20px;
+    background: var(--phone-glass-dark); border: none; cursor: pointer;
+    font-family: var(--font-main); font-size: 13px; font-weight: 600;
+    color: var(--phone-accent); transition: var(--transition);
+}
+.share-location-btn:hover { background: var(--phone-accent); color: white; }
+
+/* --- TikTok App --- */
+#panel-tiktok .tt-header { background: var(--tiktok-color); border-bottom: none; }
+#panel-tiktok .tt-header .app-title { color: white; }
+#panel-tiktok .tt-header .back-btn { background: rgba(255,255,255,0.15); color: white; }
+
+.tt-feed { flex: 1; overflow: hidden; position: relative; background: black; }
+.tt-video-item {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column;
+    transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+.tt-video-bg {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px;
+    background: linear-gradient(135deg, #1a1a2e, #0d0d0d);
+    position: relative; overflow: hidden;
+}
+.tt-video-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    padding: 16px; color: white; font-family: var(--font-main);
+    background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+}
+.tt-user { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+.tt-caption { font-size: 13px; opacity: 0.9; margin-bottom: 6px; }
+.tt-sound { font-size: 12px; opacity: 0.7; display: flex; align-items: center; gap: 4px; }
+.tt-actions {
+    position: absolute; right: 12px; bottom: 80px;
+    display: flex; flex-direction: column; gap: 18px;
+    align-items: center;
+}
+.tt-action { display: flex; flex-direction: column; align-items: center; gap: 4px; color: white; cursor: pointer; transition: var(--transition); }
+.tt-action:hover { transform: scale(1.15); }
+.tt-action .icon { font-size: 30px; }
+.tt-action .count { font-size: 11px; font-family: var(--font-main); font-weight: 600; }
+.tt-nav-indicator { position: absolute; bottom: 14px; right: 16px; display: flex; flex-direction: column; gap: 6px; }
+.tt-nav-dot { width: 4px; height: 4px; border-radius: 2px; background: rgba(255,255,255,0.4); transition: var(--transition); }
+.tt-nav-dot.active { background: white; height: 16px; }
+
+/* --- Twitter App --- */
+#panel-twitter .tw-header { background: var(--twitter-color); }
+#panel-twitter .tw-header .app-title { color: white; }
+#panel-twitter .tw-header .back-btn { background: rgba(255,255,255,0.3); color: white; }
+
+.tw-compose-btn {
+    position: absolute; bottom: 20px; right: 20px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: var(--twitter-color); border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: white;
+    box-shadow: 0 4px 16px rgba(29,161,242,0.4);
+    transition: var(--transition); z-index: 5;
+}
+.tw-compose-btn:hover { transform: scale(1.1); background: #1a8cd8; }
+
+.tw-feed { flex: 1; overflow-y: auto; }
+.tw-tweet {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--phone-secondary);
+    display: flex; gap: 10px;
+    font-family: var(--font-main);
+    cursor: pointer;
+    transition: var(--transition);
+}
+.tw-tweet:hover { background: rgba(29,161,242,0.04); }
+.tw-tweet-avatar { width: 42px; height: 42px; border-radius: 50%; background: linear-gradient(135deg, var(--twitter-color), #56ccf2); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.tw-tweet-body { flex: 1; }
+.tw-tweet-header { display: flex; gap: 6px; align-items: baseline; margin-bottom: 4px; }
+.tw-tweet-name { font-weight: 700; font-size: 14px; color: var(--phone-text); }
+.tw-tweet-handle { font-size: 12px; color: var(--phone-text-light); }
+.tw-tweet-time { font-size: 11px; color: var(--phone-text-light); margin-left: auto; }
+.tw-tweet-text { font-size: 14px; color: var(--phone-text); line-height: 1.5; margin-bottom: 8px; }
+.tw-tweet-actions { display: flex; gap: 18px; }
+.tw-action-btn { background: none; border: none; font-size: 14px; color: var(--phone-text-light); cursor: pointer; display: flex; align-items: center; gap: 4px; font-family: var(--font-main); transition: var(--transition); }
+.tw-action-btn:hover { color: var(--twitter-color); transform: scale(1.1); }
+
+/* Tweet compose overlay */
+.compose-overlay {
+    position: absolute; inset: 0; z-index: 20;
+    background: var(--phone-primary); display: flex; flex-direction: column;
+    transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.compose-overlay.open { transform: translateY(0); }
+.compose-header { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-bottom: 1px solid var(--phone-secondary); }
+.compose-cancel { background: none; border: none; font-family: var(--font-main); font-size: 15px; color: var(--phone-text-light); cursor: pointer; }
+.compose-tweet-btn {
+    margin-left: auto; background: var(--twitter-color); border: none;
+    border-radius: 20px; padding: 7px 18px; color: white;
+    font-family: var(--font-main); font-weight: 700; font-size: 14px; cursor: pointer;
+    transition: var(--transition);
+}
+.compose-tweet-btn:hover { background: #1a8cd8; }
+.compose-body { flex: 1; display: flex; padding: 14px 16px; gap: 12px; }
+.compose-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--twitter-color), #56ccf2); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+.compose-textarea { flex: 1; border: none; resize: none; font-family: var(--font-main); font-size: 16px; color: var(--phone-text); background: none; outline: none; }
+.compose-privacy { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-top: 1px solid var(--phone-secondary); font-family: var(--font-main); font-size: 13px; }
+.privacy-toggle { display: flex; gap: 8px; }
+.privacy-btn { padding: 5px 14px; border-radius: 16px; border: 1.5px solid var(--phone-secondary); background: none; cursor: pointer; font-family: var(--font-main); font-size: 12px; color: var(--phone-text-light); transition: var(--transition); }
+.privacy-btn.active { border-color: var(--twitter-color); color: var(--twitter-color); background: rgba(29,161,242,0.08); }
+
+/* --- Settings Tab --- */
+#panel-settings .settings-body { flex: 1; overflow-y: auto; padding: 16px; }
+.settings-section { margin-bottom: 20px; }
+.settings-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--phone-text-light); font-family: var(--font-main); margin-bottom: 8px; padding: 0 4px; }
+.settings-card { background: white; border-radius: var(--phone-radius-sm); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+.settings-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 13px 16px; border-bottom: 1px solid var(--phone-secondary);
+    cursor: pointer; transition: var(--transition);
+    font-family: var(--font-main);
+}
+.settings-item:last-child { border-bottom: none; }
+.settings-item:hover { background: var(--phone-secondary); }
+.settings-item .s-icon { font-size: 20px; width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.settings-item .s-info { flex: 1; }
+.settings-item .s-name { font-size: 14px; font-weight: 600; color: var(--phone-text); }
+.settings-item .s-sub { font-size: 12px; color: var(--phone-text-light); margin-top: 1px; }
+.settings-item .s-val { font-size: 13px; color: var(--phone-accent); font-weight: 600; }
+.settings-item .s-arrow { color: var(--phone-text-light); font-size: 12px; }
+
+/* Wallpaper picker */
+.wallpaper-picker { display: flex; gap: 8px; flex-wrap: wrap; padding: 4px 0; }
+.wp-option {
+    width: 48px; height: 48px; border-radius: 12px; cursor: pointer;
+    border: 2.5px solid transparent; transition: var(--transition);
+}
+.wp-option.active { border-color: var(--phone-accent); transform: scale(1.1); }
+.wp-option:hover { transform: scale(1.05); }
+
+/* --- Notes Tab --- */
+#panel-notes .notes-body { flex: 1; overflow-y: auto; padding: 12px 14px; display: flex; flex-direction: column; gap: 10px; }
+.note-card {
+    background: white; border-radius: var(--phone-radius-sm);
+    padding: 14px; box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    border-left: 4px solid var(--phone-accent);
+    font-family: var(--font-main);
+    cursor: pointer; transition: var(--transition);
+}
+.note-card:hover { transform: translateX(4px); box-shadow: 0 4px 14px rgba(108,99,255,0.12); }
+.note-card .note-date { font-size: 11px; color: var(--phone-text-light); margin-bottom: 4px; }
+.note-card .note-text { font-size: 14px; color: var(--phone-text); line-height: 1.5; }
+.note-add-btn {
+    position: absolute; bottom: 20px; right: 20px;
+    width: 50px; height: 50px; border-radius: 50%;
+    background: linear-gradient(135deg, #f9d423, #f83600);
+    border: none; cursor: pointer; font-size: 24px; color: white;
+    box-shadow: 0 4px 16px rgba(249,212,35,0.4);
+    display: flex; align-items: center; justify-content: center;
+    transition: var(--transition);
+}
+.note-add-btn:hover { transform: scale(1.1); }
+.note-editor {
+    position: absolute; inset: 0; background: var(--phone-primary); z-index: 10;
+    display: flex; flex-direction: column;
+    transform: translateY(100%); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+.note-editor.open { transform: translateY(0); }
+.note-editor-header { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--phone-secondary); }
+.note-save-btn { background: var(--phone-accent); color: white; border: none; border-radius: 16px; padding: 6px 16px; font-family: var(--font-main); font-weight: 700; cursor: pointer; margin-left: auto; }
+.note-editor textarea { flex: 1; padding: 14px; border: none; font-family: var(--font-main); font-size: 15px; resize: none; outline: none; background: none; color: var(--phone-text); line-height: 1.7; }
+
+/* --- Music Tab --- */
+#panel-music .music-body { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.music-url-input-row { display: flex; gap: 8px; }
+.music-url-input {
+    flex: 1; border: 1.5px solid var(--phone-secondary);
+    border-radius: 22px; padding: 10px 16px;
+    font-family: var(--font-main); font-size: 13px;
+    outline: none; background: white; transition: var(--transition);
+}
+.music-url-input:focus { border-color: var(--phone-accent); }
+.music-add-btn {
+    padding: 10px 18px; border-radius: 22px;
+    background: linear-gradient(135deg, #f857a6, #ff5858);
+    border: none; color: white; font-family: var(--font-main); font-weight: 700; cursor: pointer;
+    transition: var(--transition);
+}
+.music-add-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(248,87,166,0.4); }
+
+.music-player-card {
+    background: white; border-radius: var(--phone-radius);
+    padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.music-player-title { font-weight: 700; font-size: 15px; color: var(--phone-text); font-family: var(--font-main); margin-bottom: 4px; }
+.music-player-channel { font-size: 12px; color: var(--phone-text-light); font-family: var(--font-main); margin-bottom: 14px; }
+.music-player-controls { display: flex; align-items: center; justify-content: center; gap: 16px; }
+.music-ctrl-btn {
+    width: 40px; height: 40px; border-radius: 50%; border: none; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+    background: var(--phone-secondary); transition: var(--transition);
+}
+.music-ctrl-btn.play-pause {
+    width: 52px; height: 52px;
+    background: linear-gradient(135deg, #f857a6, #ff5858);
+    color: white; font-size: 22px;
+    box-shadow: 0 4px 14px rgba(248,87,166,0.35);
+}
+.music-ctrl-btn:hover { transform: scale(1.1); }
+.music-progress-row { margin-top: 14px; display: flex; align-items: center; gap: 10px; }
+.music-progress { flex: 1; height: 4px; background: var(--phone-secondary); border-radius: 2px; cursor: pointer; position: relative; }
+.music-progress-fill { height: 100%; background: linear-gradient(90deg, #f857a6, #ff5858); border-radius: 2px; width: 0%; transition: width 0.5s; }
+.music-time { font-size: 11px; color: var(--phone-text-light); font-family: var(--font-main); font-variant-numeric: tabular-nums; }
+.music-volume-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.music-vol-icon { font-size: 16px; }
+.music-vol-slider { flex: 1; accent-color: #f857a6; }
+
+.music-playlist { display: flex; flex-direction: column; gap: 6px; }
+.playlist-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 14px;
+    background: white; border-radius: var(--phone-radius-sm);
+    cursor: pointer; transition: var(--transition);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    font-family: var(--font-main);
+}
+.playlist-item:hover, .playlist-item.active { background: rgba(248,87,166,0.08); }
+.playlist-item.active { border-left: 3px solid #f857a6; }
+.playlist-item .pl-icon { font-size: 20px; }
+.playlist-item .pl-info { flex: 1; }
+.playlist-item .pl-title { font-size: 13px; font-weight: 600; color: var(--phone-text); }
+.playlist-item .pl-url { font-size: 11px; color: var(--phone-text-light); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 180px; }
+.playlist-item .pl-del { background: none; border: none; font-size: 16px; cursor: pointer; color: var(--phone-text-light); transition: var(--transition); }
+.playlist-item .pl-del:hover { color: #e53e3e; }
+
+/* YouTube embed */
+.yt-embed-container { border-radius: var(--phone-radius-sm); overflow: hidden; background: black; aspect-ratio: 16/9; }
+.yt-embed-container iframe { width: 100%; height: 100%; border: none; }
+
+/* --- Weather Tab --- */
+#panel-weather .weather-body { flex: 1; overflow-y: auto; padding: 16px; }
+.weather-main-card {
+    background: linear-gradient(135deg, #56ccf2, #2f80ed);
+    border-radius: var(--phone-radius); padding: 24px;
+    color: white; font-family: var(--font-main);
+    text-align: center; margin-bottom: 14px;
+}
+.weather-place { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.weather-icon-big { font-size: 64px; margin: 10px 0; }
+.weather-temp-big { font-size: 52px; font-weight: 700; line-height: 1; }
+.weather-desc { font-size: 14px; opacity: 0.88; margin-top: 4px; }
+.weather-detail-row { display: flex; gap: 10px; margin-top: 16px; }
+.weather-detail { flex: 1; background: rgba(255,255,255,0.2); border-radius: 12px; padding: 10px 8px; text-align: center; }
+.weather-detail .wd-label { font-size: 11px; opacity: 0.8; margin-bottom: 4px; }
+.weather-detail .wd-val { font-size: 16px; font-weight: 700; }
+.weather-extra-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.weather-extra-card { background: white; border-radius: var(--phone-radius-sm); padding: 14px; font-family: var(--font-main); box-shadow: 0 1px 4px rgba(0,0,0,0.07); }
+.weather-extra-card .we-label { font-size: 11px; color: var(--phone-text-light); margin-bottom: 6px; }
+.weather-extra-card .we-val { font-size: 18px; font-weight: 700; color: var(--phone-text); }
+.weather-extra-card .we-icon { font-size: 24px; margin-bottom: 4px; }
+
+/* --- Pet Game Tab --- */
+#panel-game .game-body { flex: 1; overflow: hidden; display: flex; flex-direction: column; gap: 0; }
+.pet-select-screen { flex: 1; overflow-y: auto; padding: 14px; }
+.pet-select-title { font-weight: 700; font-size: 16px; font-family: var(--font-main); color: var(--phone-text); margin-bottom: 12px; text-align: center; }
+.pet-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+.pet-option {
+    background: white; border-radius: var(--phone-radius-sm);
+    padding: 14px 8px; text-align: center; cursor: pointer;
+    transition: var(--transition); box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+    border: 2px solid transparent; font-family: var(--font-main);
+}
+.pet-option:hover { border-color: var(--phone-accent); transform: translateY(-3px); }
+.pet-option .po-emoji { font-size: 32px; margin-bottom: 6px; }
+.pet-option .po-name { font-size: 12px; font-weight: 600; color: var(--phone-text); }
+
+.pet-game-screen { flex: 1; display: flex; flex-direction: column; }
+.pet-stats-row { display: flex; gap: 8px; padding: 10px 14px; background: var(--phone-secondary); flex-shrink: 0; }
+.pet-stat { flex: 1; }
+.pet-stat-label { font-size: 10px; font-weight: 700; color: var(--phone-text-light); font-family: var(--font-main); margin-bottom: 3px; text-transform: uppercase; }
+.pet-stat-bar { height: 6px; background: rgba(0,0,0,0.1); border-radius: 3px; overflow: hidden; }
+.pet-stat-fill { height: 100%; border-radius: 3px; transition: width 0.5s; }
+.pet-stat-fill.hunger { background: linear-gradient(90deg, #f9d423, #f83600); }
+.pet-stat-fill.happy { background: linear-gradient(90deg, #43e97b, #38f9d7); }
+.pet-stat-fill.clean { background: linear-gradient(90deg, #56ccf2, #2f80ed); }
+
+.pet-stage { flex: 1; display: flex; align-items: center; justify-content: center; background: linear-gradient(180deg, #e8f5e9, #f3e5f5); position: relative; }
+.pet-emoji-big { font-size: 88px; transition: transform 0.2s; cursor: pointer; user-select: none; animation: petFloat 3s ease-in-out infinite; }
+@keyframes petFloat { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+.pet-emoji-big:active { transform: scale(0.85); }
+.pet-speech { position: absolute; top: 20px; background: white; border-radius: 16px; padding: 8px 14px; font-family: var(--font-main); font-size: 13px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); max-width: 200px; text-align: center; }
+.pet-speech::after { content:''; position:absolute; bottom:-8px; left:50%; transform:translateX(-50%); border:8px solid transparent; border-top-color:white; border-bottom:none; }
+
+.pet-actions { display: flex; gap: 8px; padding: 10px 12px; background: white; flex-shrink: 0; flex-wrap: wrap; justify-content: center; }
+.pet-action-btn {
+    padding: 8px 12px; border-radius: 20px; border: 1.5px solid var(--phone-secondary);
+    background: white; cursor: pointer; font-family: var(--font-main); font-size: 12px; font-weight: 600;
+    transition: var(--transition); display: flex; align-items: center; gap: 4px;
+    color: var(--phone-text);
+}
+.pet-action-btn:hover { background: var(--phone-accent); color: white; border-color: var(--phone-accent); transform: translateY(-2px); }
+
+/* --- Scrollbar Styling --- */
+.ig-posts-feed::-webkit-scrollbar,
+.ig-dm-list::-webkit-scrollbar,
+.chat-window::-webkit-scrollbar,
+.tw-feed::-webkit-scrollbar,
+.notes-body::-webkit-scrollbar,
+.music-body::-webkit-scrollbar,
+.weather-body::-webkit-scrollbar,
+.settings-body::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--phone-secondary); border-radius: 2px; }
+
+/* IG Tabs */
+.ig-tab-bar { display: flex; border-bottom: 1.5px solid var(--phone-secondary); flex-shrink: 0; }
+.ig-tab { flex: 1; padding: 10px; text-align: center; font-family: var(--font-main); font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--transition); border-bottom: 2.5px solid transparent; margin-bottom: -1.5px; color: var(--phone-text-light); }
+.ig-tab.active { color: var(--phone-accent); border-bottom-color: var(--phone-accent); }
+
+/* LINE Tabs */
+.line-tab-bar { display: flex; border-bottom: 1.5px solid var(--phone-secondary); flex-shrink: 0; }
+.line-tab { flex: 1; padding: 10px; text-align: center; font-family: var(--font-main); font-size: 13px; font-weight: 600; cursor: pointer; transition: var(--transition); border-bottom: 2.5px solid transparent; margin-bottom: -1.5px; color: var(--phone-text-light); }
+.line-tab.active { color: var(--line-color); border-bottom-color: var(--line-color); }
+
+/* Notification badge */
+.notif-badge { background: #e53e3e; color: white; font-size: 10px; font-weight: 700; min-width: 16px; height: 16px; border-radius: 8px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; margin-left: auto; font-family: var(--font-main); }
+
+/* Toast notification */
+.phone-toast {
+    position: fixed; bottom: 150px; left: 50%; transform: translateX(-50%) translateY(20px);
+    background: var(--phone-text); color: white; padding: 10px 20px;
+    border-radius: 20px; font-family: var(--font-main); font-size: 13px;
+    z-index: 99999; opacity: 0; transition: all 0.3s;
+    white-space: nowrap; pointer-events: none;
+}
+.phone-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Responsive */
+@media (max-width: 420px) {
+    #phone-frame { width: 98vw; height: 98vh; border-radius: 24px; }
+}

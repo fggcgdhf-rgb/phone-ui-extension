@@ -1,0 +1,14 @@
+{
+    "display_name": "Phone System",
+    "name": "phone-system",
+    "version": "1.0.0",
+    "description": "A fully featured in-character phone UI with Instagram, LINE, TikTok, Twitter, Settings, Notes, Music, Weather, and Pet Game.",
+    "author": "SillyTavern Extension",
+    "auto_update": true,
+    "js": "index.js",
+    "css": "phone.css",
+    "homepage": "https://github.com/your-username/sillytavern-phone-extension",
+    "requires": [],
+    "optional": [],
+    "conflict": []
+}
