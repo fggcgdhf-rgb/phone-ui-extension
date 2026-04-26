@@ -4,7 +4,7 @@
  * Version: 1.0.0
  */
 
-import { callPopup, generateQuietPrompt } from "../../../../script.js";
+import { generateQuietPrompt } from "../../../../script.js";
 import { extension_settings, getContext, saveSettingsDebounced } from "../../../extensions.js";
 
 const EXT_NAME = "phone-system";
